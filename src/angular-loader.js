@@ -34,8 +34,7 @@ function parseComponents(objects) {
 
 function stripModule(mod) {
     const supportedBindings = ['::=', '::<', '::@'];
-    supportedBindings.forEach((binding) => mod.replace(binding, binding.substr(2)));
-    return mod;
+    return supportedBindings.reduce((item, binding) => item.replace(binding, binding.substr(2)), mod);
 }
 module.exports = function(content) {
     parseComponents(parseModule(content));
