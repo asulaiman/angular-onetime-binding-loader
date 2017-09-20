@@ -18,12 +18,12 @@ function getOneTimeBindings(bindings) {
 
 function getComponentToUpdate(properties) {
     return properties.reduce((props, property) => {
-        if (property.key.name === 'name'){
+        if (property.key.name === 'name') {
             props.name = property.value.value;
-        } 
+        }
         else if (property.key.name === 'bindings') {
             props.bindings = getOneTimeBindings(property.value.properties);
-            
+
         };
         return props;
     }, {});
@@ -44,12 +44,38 @@ function parseModule(mod) {
             }
         }
         return componentList;
-    },[]);
-    
+    }, []);
+
 }
 
-module.exports = function(content) {
-    module.updateBindings = module.updateBindings || [];
-    module.updateBindings.push(...parseModule(content));
+function toDashCase() {
+    const upperChars = this.match(/([A-Z])/g);
+    if (!upperChars) {
+        return this;
+    }
+
+    let str = this.toString();
+    for (let i = 0, n = upperChars.length; i < n; i++) {
+        str = str.replace(new RegExp(upperChars[i]), '-' + upperChars[i].toLowerCase());
+    }
+
+    if (str.slice(0, 1) === '-') {
+        str = str.slice(1);
+    }
+
+    return str;
+};
+
+module.exports = function (content) {
+    if (this.query.type === 'html' && module.updateBindings) {
+        module.updateBindings.forEach((component) =>
+            component.bindings.forEach((binding) =>
+                content = content.replace(new RegExp(`(<${toDashCase.bind(component.name)()}[^>]*${toDashCase.bind(binding)()}=.)([^'"]+)`, "g"), "$1::$2")));
+    }
+    else if (this.query.type !== 'html') {
+        module.updateBindings = module.updateBindings || [];
+        module.updateBindings.push(...parseModule(content));
+    }
+
     return content;
-}
+}   
