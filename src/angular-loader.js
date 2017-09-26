@@ -1,12 +1,11 @@
 const esprima = require('esprima');
 const get = require('lodash/get');
-
+const supportedBindings = ['::=', '::=?', '::<', '::<?', '::@', '::@?'];
 function isExportSupported(mod) {
     return (mod.type === 'ExportNamedDeclaration' || mod.type === 'ExportDefaultDeclaration') && mod.declaration.type === 'ObjectExpression';
 }
 
 function getOneTimeBindings(bindings) {
-    const supportedBindings = ['::=', '::=?', '::<', '::<?', '::@', '::@?'];
     return bindings.reduce((oneTimeBindings, binding) => {
         if (supportedBindings.includes(binding.value.value)) {
             oneTimeBindings.push(binding.key.name);
@@ -66,6 +65,10 @@ function toDashCase() {
     return str;
 };
 
+function stripBindingAnnotation(content) {
+    return supportedBindings.reduce((cont, binding) => cont.split(binding).join(binding.replace('::', '')), content)
+}
+
 module.exports = function (content) {
     if (this.query.type === 'html' && module.updateBindings) {
         module.updateBindings.forEach((component) =>
@@ -75,7 +78,7 @@ module.exports = function (content) {
     else if (this.query.type !== 'html') {
         module.updateBindings = module.updateBindings || [];
         module.updateBindings.push(...parseModule(content));
+        return stripBindingAnnotation(content);
     }
-
-    return content;
+return content;
 }   
