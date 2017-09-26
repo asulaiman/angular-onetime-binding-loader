@@ -1,4 +1,4 @@
-# angular-onetime-binding-loader (IN PROGRESS)
+# angular-onetime-binding-loader
 Webpack loader which allows definition of one time binding on component level. Right now if you want to leverage one-time cheap bindings in  Angular 1 they need to be defined for a particular binding in all templates. The loader allows you to define it once when you declare your component. 
 
 # Before:
@@ -44,12 +44,12 @@ Important note:
 
 # Binding support
 At the time of this writing, the supported binding types are:
-- '::='
-- '::=?'
-- '::<'
-- '::<?'
-- '::@'
-- '::@?'
+- ::=
+- ::=?
+- ::<
+- ::<?
+- ::@
+- ::@?
 
 # Usage with webpack
 Webpack config:
