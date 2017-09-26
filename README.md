@@ -2,7 +2,8 @@
 Webpack loader which allows definition of one time binding on component level. Right now if you want to leverage one-time cheap bindings in  Angular 1 they need to be defined for a particular binding in all templates. The loader allows you to define it once when you declare your component. 
 
 # Install
-```npm install angular-onetime-binding-loader --save-dev
+```
+npm install angular-onetime-binding-loader --save-dev
 ```
 # Before
 ```javascript
