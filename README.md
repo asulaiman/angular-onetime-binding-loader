@@ -38,8 +38,19 @@ export default {
 Benefits:
 - No need to repeat the annotation in every template where you use the component
 - Enforce usage of onetime bindings 
+
 Important note:
 - You must export your component object in order for the loader to be able to parse. It doesnt necessarily have to be a default export it could also be a named declaration export.
+
+# Binding support
+At the time of this writing, the supported binding types are:
+- '::='
+- '::=?'
+- '::<'
+- '::<?'
+- '::@'
+- '::@?'
+
 # Usage with webpack
 Webpack config:
 ```javascript
