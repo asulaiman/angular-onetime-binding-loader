@@ -1,0 +1,27 @@
+{
+    "name": "angular-onetime-binding-loader",
+    "version": "1.0.0",
+    "description": "A Webpack loader which allows definition of one time binding on component level.",
+    "main": "src/index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/asulaiman/angular-onetime-binding-loader"
+    },
+    "dependencies": {
+        "esprima": "4.0.0"
+    },
+    "keywords": [
+        "angular-onetime-binding-loader",
+        "binding",
+        "onetime",
+        "webpack",
+        "loader",
+        "iminif"
+    ],
+    "author": "Adil <asulaimanificent@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/asulaiman/angular-onetime-binding-loader/issues"
+    },
+    "homepage": "https://github.com/asulaiman/angular-onetime-binding-loader"
+}

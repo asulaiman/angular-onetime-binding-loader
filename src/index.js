@@ -1,5 +1,4 @@
 const esprima = require('esprima');
-const get = require('lodash/get');
 const supportedBindings = ['::=', '::=?', '::<', '::<?', '::@', '::@?'];
 function isExportSupported(mod) {
     return (mod.type === 'ExportNamedDeclaration' || mod.type === 'ExportDefaultDeclaration') && mod.declaration.type === 'ObjectExpression';
