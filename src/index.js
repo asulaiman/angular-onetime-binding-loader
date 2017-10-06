@@ -1,9 +1,20 @@
 const esprima = require('esprima');
 const supportedBindings = ['::=', '::=?', '::<', '::<?', '::@', '::@?'];
+/**
+ * True if one of the following exports is used:
+ * export mod (where mod is an object)
+ * export default mod = { someProp: someValue }
+ * @param {*} mod 
+ */
+
 function isExportSupported(mod) {
     return (mod.type === 'ExportNamedDeclaration' || mod.type === 'ExportDefaultDeclaration') && mod.declaration.type === 'ObjectExpression';
 }
 
+/**
+ * Gets list of one time bindings by name 
+ * @param {Array} bindings - list of all bindings in the component 
+ */
 function getOneTimeBindings(bindings) {
     return bindings.reduce((oneTimeBindings, binding) => {
         if (supportedBindings.includes(binding.value.value)) {
@@ -14,6 +25,10 @@ function getOneTimeBindings(bindings) {
     }, []);
 }
 
+/**
+ * Returns component name and one time bindings that need to be updated
+ * @param {Array} properties of export
+ */
 function getComponentToUpdate(properties) {
     return properties.reduce((props, property) => {
         if (property.key.name === 'name') {
@@ -45,7 +60,9 @@ function parseModule(mod) {
     }, []);
 
 }
-
+/**
+ * Converts string to dash case. Used to convert component bindings/names from from camel to dash case
+ */
 function toDashCase() {
     const upperChars = this.match(/([A-Z])/g);
     if (!upperChars) {
@@ -64,6 +81,10 @@ function toDashCase() {
     return str;
 };
 
+/**
+ * Removes one time binding annotation from all supported binding annotations
+ * @param {String} content - binding annotation string 
+ */
 function stripBindingAnnotation(content) {
     return supportedBindings.reduce((cont, binding) => cont.split(binding).join(binding.replace('::', '')), content)
 }
