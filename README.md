@@ -70,7 +70,7 @@ Webpack config:
             modules: ['node_modules', path.resolve('angular-onetime-binding-loader')]
         },
         module: {
-            noParse: [],
+            noParse: /html/,
             rules: [
                 {
                     test: /\.js$/,
